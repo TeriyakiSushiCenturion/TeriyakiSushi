@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Teriyaki Sushi House</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding-top: 80px; /* Reduced space for smaller header */
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* Header Styling - REDUCED SIZE */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 10px 20px; /* Reduced padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 0; /* Removed padding */
+        }
+        
+        /* Smaller logo */
+        .logo {
+            width: 60px; /* Reduced size */
+            height: 60px; /* Reduced size */
+            overflow: visible;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 0.8rem;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: none;
+            max-height: none;
+        }
+        
+        header h1 {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 0.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        nav a.active {
+            background-color: #d02a18;
+            color: #fff;
+        }
+        
+        /* Page Banner */
+        .page-banner {
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem; /* Smaller padding */
+            margin-bottom: 0;
+            position: relative;
+        }
+        
+        .page-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .page-banner h2, .page-banner p {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* IMPROVED: Always fixed food category navigation */
+        .food-nav-container {
+            position: sticky;
+            top: 80px; /* Position right below the header */
+            z-index: 900;
+            width: 100%;
+            background-color: #fff;
+            border-bottom: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .food-nav {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .food-nav ul {
+            display: flex;
+            list-style: none;
+            width: 100%;
+            min-width: max-content;
+        }
+        
+        .food-nav li {
+            margin-right: 2rem;
+        }
+        
+        .food-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .food-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #d02a18;
+            transition: width 0.3s;
+        }
+        
+        .food-nav a:hover {
+            color: #d02a18;
+        }
+        
+        .food-nav a.active {
+            color: #d02a18;
+        }
+        
+        .food-nav a.active::after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 1rem 1rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .menu-section {
+            padding-top: 1rem;
+            margin-bottom: 3rem;
+            scroll-margin-top: 150px; /* Ensures section is visible when scrolled to */
+        }
+        
+        .menu-section > h2 {
+            border-bottom: 2px solid #d02a18;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #d02a18;
+        }
+        
+        .menu-category {
+            margin-bottom: 2rem;
+        }
+        
+        .menu-category h3 {
+            margin-bottom: 1rem;
+            background-color: #f5f5f5;
+            padding: 0.5rem;
+            border-left: 3px solid #d02a18;
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .menu-item {
+            background-color: #fff;
+            border-radius: 6px;
+            padding: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-name-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+        
+        .item-name-price h4 {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #d02a18;
+        }
+        
+        .description {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .note {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .buffet-notice {
+            background-color: #f8f1e5;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #d02a18;
+        }
+        
+        .buffet-notice h3 {
+            color: #d02a18;
+            margin-bottom: 0.8rem;
+            background-color: transparent;
+            border-left: none;
+            padding: 0;
+        }
+        
+        /* Table booking info */
+        .table-booking {
+            background-color: #f3f3f3;
+            border-left: 3px solid #d02a18;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .table-booking i {
+            color: #d02a18;
+            margin-right: 6px;
+        }
+        
+        .table-booking strong {
+            color: #d02a18;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 2rem 1rem 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo img {
+            width: 60px; /* Smaller footer logo */
+            height: 60px; /* Smaller footer logo */
+            margin-right: 0.8rem;
+            object-fit: contain;
+            background-color: transparent;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        
+        .footer-contact, .footer-hours, .footer-social {
+            margin-bottom: 1.5rem;
+        }
+        
+        footer h4 {
+            color: #d02a18;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #444;
+            padding-bottom: 0.5rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #444;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d02a18;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(20px);
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px; /* Adjusted for smaller header */
+            }
+            
+            .food-nav-container {
+                top: 70px; /* Adjusted for smaller header */
+            }
+            
+            .food-nav li {
+                margin-right: 1.5rem;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-banner {
+                padding: 1.5rem 1rem;
+            }
+            
+            .menu-section {
+                scroll-margin-top: 130px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container h1 {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            nav li {
+                margin-left: 0.3rem;
+            }
+            
+            nav a {
+                padding: 0.2rem 0.3rem;
+                font-size: 0.8rem;
+            }
+            
+            .food-nav li {
+                margin-right: 1rem;
+            }
+            
+            .food-nav a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="teriyaki-logo.jpg" alt="Teriyaki Sushi House Logo">
+            </div>
+            <h1>Teriyaki Sushi House</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1600&auto=format&fit=crop');">
+        <h2>Our Menu</h2>
+        <p>Discover our wide variety of Japanese, Thai, and Chinese cuisine</p>
+    </div>
+
+    <!-- Always visible food navigation -->
+    <div class="food-nav-container">
+        <div class="food-nav">
+            <ul>
+                <li><a href="#sushi" class="active">Sushi</a></li>
+                <li><a href="#platters">Sushi Platters</a></li>
+                <li><a href="#thai">Thai Food</a></li>
+                <li><a href="#chinese">Chinese Food</a></li>
+                <li><a href="#japanese">Japanese Food</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="menu-page">
+        <section id="sushi" class="menu-section">
+            <h2>Sushi Menu</h2>
+            
+            <div class="menu-category">
+                <h3>Maki (6 Pcs)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Spring Maki</h4>
+                            <span class="price">R49</span>
+                        </div>
+                        <p class="description">Rice paper</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Cucumber</h4>
+                            <span class="price">R30</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Avocado</h4>
+                            <span class="price">R30</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R40</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crab</h4>
+                            <span class="price">R33</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna</h4>
+                            <span class="price">R42</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Smoked Salmon</h4>
+                            <span class="price">R42</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>California Roll (4 Pcs)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R41</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crab</h4>
+                            <span class="price">R37</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable</h4>
+                            <span class="price">R33</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn</h4>
+                            <span class="price">R45</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna</h4>
+                            <span class="price">R42</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Smoked Salmon & Cream Cheese</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crispy Chicken</h4>
+                            <span class="price">R36</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tempura Prawn</h4>
+                            <span class="price">R49</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Hand Roll (1 Pc)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable</h4>
+                            <span class="price">R36</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn</h4>
+                            <span class="price">R43</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R40</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Spicy Tuna</h4>
+                            <span class="price">R42</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna</h4>
+                            <span class="price">R40</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Bamboo Hand Roll</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Nigiri-Sushi (2 Pcs)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R38</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna</h4>
+                            <span class="price">R38</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn</h4>
+                            <span class="price">R45</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crab</h4>
+                            <span class="price">R35</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Inari</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetarian Inari</h4>
+                            <span class="price">R44</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Sashimi (3 Pcs)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R65</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna</h4>
+                            <span class="price">R65</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Fashion Sandwiches (4 Pcs)</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon</h4>
+                            <span class="price">R45</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn</h4>
+                            <span class="price">R47</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crab</h4>
+                            <span class="price">R38</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable</h4>
+                            <span class="price">R36</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Smoked Salmon</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Wasabi Parcel</h4>
+                            <span class="price">R55</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Cheese Stack</h4>
+                            <span class="price">R55</span>
+                        </div>
+                        <p class="description">Salmon or Prawn (4 Pcs)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Chef's Special</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Rainbow Roll (4 Pcs)</h4>
+                            <span class="price">R47</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Dragon Roll (4 Pcs)</h4>
+                            <span class="price">R44</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sakura Roll (4 Pcs)</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Samurai Roll (4 Pcs)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tiger Roll (4 Pcs)</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Strawberry California Roll (4 Pcs)</h4>
+                            <span class="price">R45</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tempura Prawn Maki (4 Pcs)</h4>
+                            <span class="price">R53</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon House Sushi (4 Pcs)</h4>
+                            <span class="price">R46</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Fried Sushi (4 Pcs)</h4>
+                            <span class="price">R42</span>
+                        </div>
+                        <p class="description">Cheese & Veg</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tepula Prawn & Sweet Chilli Sushi (4 Pcs)</h4>
+                            <span class="price">R51</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>New Special</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn Volcano (4 Pcs)</h4>
+                            <span class="price">R60</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Spring Love Sandwich (4 Pcs)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Special Sandwich (4 Pcs)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tempura Pra Gold Eyes (4 Pcs)</h4>
+                            <span class="price">R55</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Green Giant (4 Pcs)</h4>
+                            <span class="price">R55</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Spring Love (4 Pcs)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon Cheese California (4 Pcs)</h4>
+                            <span class="price">R49</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Rock Prawn (4 Pcs)</h4>
+                            <span class="price">R55</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tuna Grange (4 Pcs)</h4>
+                            <span class="price">R53</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Teriyaki Salmon (4 Pcs)</h4>
+                            <span class="price">R53</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Teriyaki Chicken (4 Pcs)</h4>
+                            <span class="price">R42</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="platters" class="menu-section">
+            <h2>Sushi Platters</h2>
+            
+            <div class="menu-category">
+                <h3>Sushi Platters for Sharing</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Platter 4 (24pcs)</h4>
+                            <span class="price">R224</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Platter 5 (18pcs)</h4>
+                            <span class="price">R232</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Platter 6 (18pcs)</h4>
+                            <span class="price">R165</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Platter 7 (23pcs)</h4>
+                            <span class="price">R243</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>House Platter (30pcs)</h4>
+                            <span class="price">R316</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sushi Menu A (15pcs)</h4>
+                            <span class="price">R142</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sushi Menu B (16pcs)</h4>
+                            <span class="price">R158</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="buffet-notice">
+                <h3>Sushi Buffet Special - R249 per person</h3>
+                <p>Eat as much as you want! Enjoy unlimited fresh sushi made to order.</p>
+                <p>Available daily. Minimum 2 people per table required.</p>
+                <p class="table-booking"><i class="fas fa-phone"></i> For table bookings, please call: <strong>012 6440373</strong> or <strong>078 3177256</strong></p>
+            </div>
+        </section>
+
+        <section id="thai" class="menu-section">
+            <h2>Thai Food</h2>
+            
+            <div class="menu-category">
+                <h3>Soup</h3>
+                <p class="note">Can be spiced mild, medium, or hot</p>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tom Yum Goong (T1)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                        <p class="description">Prawn and mushroom in a hot and sour broth</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tom Kah Gai (T2)</h4>
+                            <span class="price">R43</span>
+                        </div>
+                        <p class="description">Vegetable and chicken soup</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Appetizers</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Satay Gai (T3)</h4>
+                            <span class="price">R41</span>
+                        </div>
+                        <p class="description">Chicken satay with peanut sauce</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sesame Chicken (T4)</h4>
+                            <span class="price">R47</span>
+                        </div>
+                        <p class="description">Fried chicken strips in a sesame batter</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Thai Prawn Spring Roll (T5)</h4>
+                            <span class="price">R48</span>
+                        </div>
+                        <p class="description">4 Prawn spring rolls served with sweet chilli sauce</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Stir Fried Noodles</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Thai Gai (T6)</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Noodles, bean sprouts, tofu, spinach & chicken stir fried</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Mee Sie Eluy Gai (T7)</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Chicken & vegetables in oyster sauce</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Mee Prik Phao Gai (T8)</h4>
+                            <span class="price">R81</span>
+                        </div>
+                        <p class="description">Chicken, vegetables, chilli paste & cashew nuts</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Thai Goong (T9)</h4>
+                            <span class="price">R88</span>
+                        </div>
+                        <p class="description">Noodles, prawns, tofu, & bean sprouts stir fried</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Mee Seafood (T10)</h4>
+                            <span class="price">R88</span>
+                        </div>
+                        <p class="description">Prawn, calamari, crab & vegetables in chilli paste</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Rice Dishes & Curries</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Geang Khew-Wan Gai (T11)</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Thai green chicken curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Geang Phed Nua (T12)</h4>
+                            <span class="price">R79</span>
+                        </div>
+                        <p class="description">Thai red beef curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Gai Pad Kraphrow (T13)</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Chicken & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Nua Pad Kraphrow (T14)</h4>
+                            <span class="price">R79</span>
+                        </div>
+                        <p class="description">Beef & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Geang Khew-Wan Je (T15)</h4>
+                            <span class="price">R68</span>
+                        </div>
+                        <p class="description">Vegetable & tofu green curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Gai Kow Prik Phao (T16)</h4>
+                            <span class="price">R81</span>
+                        </div>
+                        <p class="description">Chicken & cashew nuts in chilli paste</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Kraphrow Goong (T17)</h4>
+                            <span class="price">R88</span>
+                        </div>
+                        <p class="description">Prawn & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Geang Khew Wan Koong (T18)</h4>
+                            <span class="price">R88</span>
+                        </div>
+                        <p class="description">Thai prawn green curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Koong Pad Prig Kang (T19)</h4>
+                            <span class="price">R88</span>
+                        </div>
+                        <p class="description">Prawn & veg roasted in red curry paste</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Kraphrow Seafood (T20)</h4>
+                            <span class="price">R90</span>
+                        </div>
+                        <p class="description">Prawn, calamari, crab & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pad Kraphrow Calamari (T21)</h4>
+                            <span class="price">R83</span>
+                        </div>
+                        <p class="description">Calamari & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Chef's Recommendations</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Pineapple Chow Faan (T22)</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Chicken, rice & veg stir fry with curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Pineapple Chow Faan (T23)</h4>
+                            <span class="price">R79</span>
+                        </div>
+                        <p class="description">Beef, rice & veg stir fry with curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Tofu Pad Kraphorow (T24)</h4>
+                            <span class="price">R68</span>
+                        </div>
+                        <p class="description">Tofu & veg stir fry with basil, chilli & garlic</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Massaman Chicken (T25)</h4>
+                            <span class="price">R81</span>
+                        </div>
+                        <p class="description">Thai Massaman Chicken Curry</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Massaman Beef (T26)</h4>
+                            <span class="price">R84</span>
+                        </div>
+                        <p class="description">Thai Massaman Beef Curry</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="chinese" class="menu-section">
+            <h2>Chinese Food</h2>
+            
+            <div class="menu-category">
+                <h3>Soup</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable Soup</h4>
+                            <span class="price">R28</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Sweet Corn Soup</h4>
+                            <span class="price">R30</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Hot & Sour Soup (hot!)</h4>
+                            <span class="price">R30</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Wun-Tun Soup (4 pcs)</h4>
+                            <span class="price">R33</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Noodle Soup</h4>
+                            <span class="price">R33</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Seafood Soup</h4>
+                            <span class="price">R36</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Soup</h4>
+                            <span class="price">R28</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Appetizers</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Spring Roll</h4>
+                            <span class="price">R15</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Spring Roll</h4>
+                            <span class="price">R15</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn Spring Roll</h4>
+                            <span class="price">R19</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable Spring Roll</h4>
+                            <span class="price">R13</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Crab Spring Roll</h4>
+                            <span class="price">R16</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Cheese Spring Roll</h4>
+                            <span class="price">R16</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Deep Fried Wun-Tun (10 pcs)</h4>
+                            <span class="price">R37</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Chow Mein</h3>
+                <p class="description">Stir fried vegetables and meat with noodles</p>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Chow Mein</h4>
+                            <span class="price">R68</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pork Chow Mein</h4>
+                            <span class="price">R70</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Chow Mein</h4>
+                            <span class="price">R71</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn Chow Mein</h4>
+                            <span class="price">R85</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Assorted Chow Mein</h4>
+                            <span class="price">R83</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Calamari Chow Mein</h4>
+                            <span class="price">R77</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable Chow Mein</h4>
+                            <span class="price">R62</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Mixed Seafood Chow Mein</h4>
+                            <span class="price">R85</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Yang Zhou Chow Mein</h4>
+                            <span class="price">R86</span>
+                        </div>
+                        <p class="description">(Prawn, Ham, Pork)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Chow Faan</h3>
+                <p class="description">Stir fried vegetables and meat with rice</p>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Chow Faan</h4>
+                            <span class="price">R68</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Pork Chow Faan</h4>
+                            <span class="price">R70</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Chow Faan</h4>
+                            <span class="price">R71</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Prawn Chow Faan</h4>
+                            <span class="price">R88</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Assorted Chow Faan</h4>
+                            <span class="price">R83</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Calamari Chow Faan</h4>
+                            <span class="price">R77</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Vegetable Chow Faan</h4>
+                            <span class="price">R62</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Mixed Seafood Chow Faan</h4>
+                            <span class="price">R85</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Yang Zhou Chow Faan</h4>
+                            <span class="price">R86</span>
+                        </div>
+                        <p class="description">(Prawn, Ham, Pork)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Rice Dishes</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Chicken</h4>
+                            <span class="price">R68</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Pork</h4>
+                            <span class="price">R70</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Beef</h4>
+                            <span class="price">R71</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Duck</h4>
+                            <span class="price">R85</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Kingklip</h4>
+                            <span class="price">R90</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Sweet & Sour Prawn</h4>
+                            <span class="price">R90</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Chicken</h4>
+                            <span class="price">R68</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Pork</h4>
+                            <span class="price">R70</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Beef</h4>
+                            <span class="price">R71</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Vegetable</h4>
+                            <span class="price">R62</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Duck</h4>
+                            <span class="price">R85</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Prawn</h4>
+                            <span class="price">R90</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chop Suey with Chicken, Beef & Prawn</h4>
+                            <span class="price">R83</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Curry Chicken</h4>
+                            <span class="price">R68</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef with Black bean sauce</h4>
+                            <span class="price">R75</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="japanese" class="menu-section">
+            <h2>Japanese Food</h2>
+            
+            <div class="menu-category">
+                <h3>Japanese Rice Dishes</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Chicken Teriyaki</h4>
+                            <span class="price">R77</span>
+                        </div>
+                        <p class="description">Grilled chicken with teriyaki sauce and steamed rice</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Salmon Teriyaki</h4>
+                            <span class="price">R90</span>
+                        </div>
+                        <p class="description">Grilled salmon with teriyaki sauce and steamed rice</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-name-price">
+                            <h4>Beef Teriyaki</h4>
+                            <span class="price">R85</span>
+                        </div>
+                        <p class="description">Grilled beef with teriyaki sauce and steamed rice</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <img src="teriyaki-logo.jpg" alt="Teriyaki Sushi House Logo">
+                    <h3>Teriyaki Sushi House</h3>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone"></i> 012 6440373</p>
+                <p><i class="fas fa-phone"></i> 078 3177256</p>
+            </div>
+            <div class="footer-hours">
+                <h4>Hours</h4>
+                <p>Monday - Saturday: 10:30 AM - 9:30 PM</p>
+                <p>Sunday: 10:30 AM - 8:00 PM</p>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Teriyaki Sushi House. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add active class to food nav items on click
+        const foodNavLinks = document.querySelectorAll('.food-nav a');
+        
+        foodNavLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default anchor behavior
+                
+                // Remove active class from all links
+                foodNavLinks.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Get the target section
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                // Smooth scroll to target section
+                if (targetSection) {
+                    const topOffset = targetSection.offsetTop - 140; // Adjust for header and navigation height
+                    window.scrollTo({
+                        top: topOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active menu item on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            
+            // Get all sections
+            const sections = document.querySelectorAll('.menu-section');
+            
+            // Find current section
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    const currentId = section.getAttribute('id');
+                    
+                    // Remove active class from all links
+                    foodNavLinks.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to corresponding food nav item
+                    const activeLink = document.querySelector(`.food-nav a[href="#${currentId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            if (scrollPosition > 500) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        // Back to top button click event
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
